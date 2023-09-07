@@ -19,6 +19,13 @@ Converting between numbers and string representations of numbers in different ba
    (make-base-eval
     '(require number-base-convert)))
 
+@section{Number string conversion}
+
+@defmodule[number-base-convert/number-string]{
+Contains functions with many keyword arguments which can be
+used to specify a base format.
+}
+
 @defproc[(number->string [n rational?]
                          [#:base base natural-number/c 10]
                          [#:sign sign sign-out/c #f]
@@ -108,16 +115,41 @@ and lowercase, enough to support bases up to 62.
   (eval:check (string-length digits-extended-up) 62)
 ]}
 
-@defproc[(number->eridian [n number?]) string?]{
-Converts a number into a string containing a base 6
-representation using the digits @litchar{ℓ}, @litchar{I},
-@litchar{V}, @litchar{λ}, @litchar{+}, and @litchar{∀}.
+@section{Specific base formats}
+
+@subsection{Eridian seximal, base 6}
+
+@defmodule[number-base-convert/eridian]{
+Converts between numbers and strings in the Eridian seximal
+or base 6 representation, using the digits @litchar{ℓ},
+@litchar{I}, @litchar{V}, @litchar{λ}, @litchar{+}, and
+@litchar{∀}.
 }
 
+@defproc[(number->eridian [n number?]) string?]{
+Converts a number into a string containing an Eridian
+seximal representation using the digits @litchar{ℓIVλ+∀}.
+
+@examples[
+  #:eval ev
+  (eval:check (number->eridian 3043) "VVℓλI")
+  (eval:check (number->eridian 1347) "IℓIVλ")
+  (eval:check (number->eridian 12741) "Iλ+∀∀λ")
+]}
+
 @defproc[(eridian->number [s string?]) number?]{
-Converts a string containing a base 6 representation with
-digits @litchar{ℓIVλ+∀} back into a number.
-}
+Converts a string containing an Eridian seximal
+representation with digits @litchar{ℓIVλ+∀} back into a
+number.
+
+@examples[
+  #:eval ev
+  (eval:check (eridian->number "VVℓλI") 3043)
+  (eval:check (eridian->number "IℓIVλ") 1347)
+  (eval:check (eridian->number "Iλ+∀∀λ") 12741)
+]}
+
+@section{Contracts}
 
 @defthing[around-out/c flat-contract?]{
 

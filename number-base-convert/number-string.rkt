@@ -1075,4 +1075,8 @@
   (check-number-string 1 "1" #:base 48 #:digits digits-extended-up)
   (check-number-string 11 "B" #:base 48 #:digits digits-extended-up)
   (check-number-string 46 "k" #:base 48 #:digits digits-extended-up)
-  (check-number-string 2878 "1Bk" #:base 48 #:digits digits-extended-up))
+  (check-number-string 2878 "1Bk" #:base 48 #:digits digits-extended-up)
+
+  (check-number-string 1347 "10123" #:base 6)
+  (check-number-string 3043 "22031" #:base 6)
+  (check-number-string 12741 "134553" #:base 6))
