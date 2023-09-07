@@ -228,9 +228,36 @@ misunderstanding:
 
 @defmodule[number-base-convert/bintetraseptimal]
 
-@defproc[(number->bintetraseptimal [n number?]) string?]
+@defproc[(number->bintetraseptimal
+          [n number?]
+          [#:digits digits string? digits-bintetraseptimal-btc])
+         string?]
 
-@defproc[(bintetraseptimal->number [s string?]) number?]
+@defproc[(bintetraseptimal->number
+          [s string?]
+          [#:digits digits string? digits-bintetraseptimal-btc])
+         number?]
+
+@defthing[digits-bintetraseptimal-btc string?]{
+The default digit set for bintetraseptimal number
+representation.
+Uses alphanumeric characters excluding @litchar{0O} and
+@litchar{Il} to avoid some potential visual confusion.
+They are in sorted order with numeric characters first, then
+uppercase alphebetic characters next, then lowercase
+alphabetic characters last.
+
+Matches a base58 implementation for bitcoin addresses.
+}
+
+@defthing[digits-bintetraseptimal-flickr string?]{
+Similar to @racket[digits-bintetraseptimal-btc], except that
+it doesn't use that sorted order, but uses numeric lowercase
+uppercase instead.
+
+Matches a base58 implementation for Flickr Short URLs here:
+@url["https://www.flickr.com/groups/api/discuss/72157616713786392/"]
+}
 
 @subsection{Binpentaseximal, BIP, base 62}
 
