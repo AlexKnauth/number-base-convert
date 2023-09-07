@@ -271,9 +271,29 @@ Matches a base58 implementation for Flickr Short URLs here:
 
 @defmodule[number-base-convert/octoctal]
 
-@defproc[(number->octoctal [n number?]) string?]
+@defproc[(number->octoctal [n number?] [#:digits digits string? digits-octoctal])
+         string?]
 
-@defproc[(octoctal->number [s string?]) number?]
+@defproc[(octoctal->number [s string?] [#:digits digits string? digits-octoctal])
+         number?]
+
+@defthing[digits-octoctal string?]{
+The default digit set for octoctal number representation.
+Uses alphanumeric characters as well as @litchar{+} and
+@litchar{/}.
+Note that this is not url or filename safe, and it isn't in
+sorted order either.
+
+Matches the digits of base64 from RFC 4648 section 4.
+}
+
+@defthing[digits-octoctal-url string?]{
+A url and filename safe digit set for octoctal numbers.
+Uses alphanumeric characters as well as @litchar{-} and
+@litchar{_}.
+
+Matches the digits of base64url from RFC 4648 section 5.
+}
 
 @subsection{Pentasuboptimal, PES, base 85}
 
