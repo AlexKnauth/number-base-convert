@@ -1057,3 +1057,22 @@
 (define (string->little little1 #:digits [digits digits-extended])
   (define L (string-length little1))
   (build-vector L (λ (i) (char->digit (string-ref little1 i) #:digits digits))))
+
+;; ---------------------------------------------------------
+
+(module+ test
+  (check-number-string 11 "1011" #:base 2)
+  (check-number-string 11 "23" #:base 4)
+  (check-number-string 11 "15" #:base 6)
+  (check-number-string 11 "11" #:base 10)
+  (check-number-string 11 "b" #:base 12)
+  (check-number-string 46 "3a" #:base 12)
+  (check-number-string 46 "2e" #:base 16)
+
+  (check-number-string 46 "3A" #:base 12 #:digits digits-extended-up)
+  (check-number-string 46 "2E" #:base 16 #:digits digits-extended-up)
+
+  (check-number-string 1 "1" #:base 48 #:digits digits-extended-up)
+  (check-number-string 11 "B" #:base 48 #:digits digits-extended-up)
+  (check-number-string 46 "k" #:base 48 #:digits digits-extended-up)
+  (check-number-string 2878 "1Bk" #:base 48 #:digits digits-extended-up))
