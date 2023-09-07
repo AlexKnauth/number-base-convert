@@ -149,6 +149,54 @@ number.
   (eval:check (eridian->number "Iλ+∀∀λ") 12741)
 ]}
 
+@subsection{Hexanonary, HEN, base 54}
+
+@defmodule[number-base-convert/hexanonary]
+
+@defproc[(number->hexanonary [n number?]) string?]
+
+@defproc[(hexanonary->number [s string?]) number?]
+
+@subsection{Heptoctal, HET, base 56}
+
+@defmodule[number-base-convert/heptoctal]
+
+@defproc[(number->heptoctal [n number?]) string?]
+
+@defproc[(heptoctal->number [s string?]) number?]
+
+@subsection{Bintetraseptimal, BNT, base 58}
+
+@defmodule[number-base-convert/bintetraseptimal]
+
+@defproc[(number->bintetraseptimal [n number?]) string?]
+
+@defproc[(bintetraseptimal->number [s string?]) number?]
+
+@subsection{Binpentaseximal, BIP, base 62}
+
+@defmodule[number-base-convert/binpentaseximal]
+
+@defproc[(number->binpentaseximal [n number?]) string?]
+
+@defproc[(binpentaseximal->number [s string?]) number?]
+
+@subsection{Octoctal, OCC, base 64}
+
+@defmodule[number-base-convert/octoctal]
+
+@defproc[(number->octoctal [n number?]) string?]
+
+@defproc[(octoctal->number [s string?]) number?]
+
+@subsection{Pentasuboptimal, PES, base 85}
+
+@defmodule[number-base-convert/pentasuboptimal]
+
+@defproc[(number->pentasuboptimal [n number?]) string?]
+
+@defproc[(pentasuboptimal->number [s string?]) number?]
+
 @section{Contracts}
 
 @defthing[around-out/c flat-contract?]{
