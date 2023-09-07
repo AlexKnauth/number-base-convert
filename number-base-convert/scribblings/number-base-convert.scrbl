@@ -161,9 +161,68 @@ number.
 
 @defmodule[number-base-convert/heptoctal]
 
-@defproc[(number->heptoctal [n number?]) string?]
+@defproc[(number->heptoctal [n number?]
+                            [#:digits digits string? digits-heptoctal-py])
+         string?]
 
-@defproc[(heptoctal->number [s string?]) number?]
+@defproc[(heptoctal->number [s string?]
+                            [#:digits digits string? digits-heptoctal-py])
+         number?]
+
+@defthing[digits-heptoctal-py string?]{
+The default digit set for heptoctal number representation.
+Uses alphanumeric characters excluding @litchar{0Oo} and
+@litchar{1Il} to avoid potential visual confusion.
+They are in sorted order with numeric characters first, then
+uppercase alphebetic characters next, then lowercase
+alphabetic characters last.
+
+This matches jyn514's Python base56 library here:
+@url["https://github.com/jyn514/base56"]
+
+It also matches the @litchar{Py3} character set from the Go
+base56 library here:
+@url["https://pkg.go.dev/toolman.org/encoding/base56"]
+}
+
+@defthing[digits-heptoctal-php string?]{
+Similar to @racket[digits-heptoctal-py], except that it
+doesn't use that sorted order, but uses numeric lowercase
+uppercase instead.
+
+This matches a PHP base56 implementation here:
+@url["https://rossduggan.ie/blog/codetry/base-56-integer-encoding-in-php/index.html"]
+
+It also matches the @litchar{Alt} character set from the Go
+base56 library here:
+@url["https://pkg.go.dev/toolman.org/encoding/base56"]
+}
+
+@defthing[digits-heptoctal-go string?]{
+Yet another digit set, also alphanumeric but excluding
+different characters @litchar{ODQo} and @litchar{Ii}.
+Note that this one does include @litchar{0} which has some
+danger of being confused with @litchar{O}, and also includes
+both @litchar{1} and @litchar{l}, which have some danger of
+being confused with each other or with @litchar{I}.
+
+This matches the @litchar{Std} character set from the Go
+base56 library here:
+@url["https://pkg.go.dev/toolman.org/encoding/base56"]
+}
+
+@defthing[digits-heptoctal-wikipedia string?]{
+Yet another digit set, also alphanumeric but excluding
+different characters @litchar{0Oo} and @litchar{Iil}.
+Note that this one does include @litchar{1}, which has some
+danger of being confused with @litchar{I} or @litchar{l}.
+
+The Wikipedia article describing this just cites the same
+PHP implementation that @racket[digits-heptoctal-php] is
+based on, so it's possible that this was just created from a
+misunderstanding:
+@url["https://en.wikipedia.org/wiki/Binary-to-text_encoding#Encoding_standards"]
+}
 
 @subsection{Bintetraseptimal, BNT, base 58}
 
