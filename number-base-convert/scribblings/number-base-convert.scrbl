@@ -69,6 +69,24 @@ configuration specified in the keyword arguments.
   @litchar{9} and lowercase alphabetic digits @litchar{a}
   through @litchar{z}.
 
+  Larger bases are supported if a @racket[digits] argument
+  is given that has enough digits.}
+
+@item{
+  @racket[sign] --- specifies how the sign of the number,
+  whether it's positive/zero/negative, should be formatted.
+
+  The default behaviour adds @litchar{-} before the digits
+  if its negative, or nothing if it's positive or zero.}
+
+@item{
+  @racket[digits] --- contains the digits starting from the
+  "zero" digit and counting up.
+
+  The default is @racket[digits-extended], using numeric
+  digits @litchar{0} through @litchar{9} and lowercase
+  alphabetic digits @litchar{a} through @litchar{z}.
+  
   For using uppercase alphabetic digits
   @litchar{A} through @litchar{Z} instead, use
   @racket[#:digits digits-extended-up].
@@ -90,6 +108,63 @@ configuration specified in the keyword arguments.
     (eval:check (number->string 46 #:base 48 #:digits digits-extended-up) "k")
     (eval:check (number->string 2878 #:base 48 #:digits digits-extended-up) "1Bk")
   ]}
+
+@item{
+  @racket[point] --- specifies how the decimal point or
+  radix point is formatted.
+
+  The default uses @litchar{.}, if that's not taken as a
+  digit.}
+
+@item{
+  @racket[repeat] --- specifies how repeating decimals, or
+  whatever the equivalent might be in other bases for
+  repeating digits after the radix point, are formatted.
+
+  The default uses @litchar{_} both before and after the
+  repeating digits, if that's not taken as a digit.}
+
+@item{
+  @racket[etc] --- specifies how uncertain trailing off
+  decimals, or whatever the equivalent might be in other bases for
+  digits after the radix point that haven't been found repeating,
+  are formatted.
+
+  The default uses @litchar{...} after some number of digits,
+  if @litchar{.} is not taken as a digit.}
+
+@item{
+  @racket[notation] --- specifies whether it should be
+  formatted with positional or exponential notation.
+
+  The default uses positional notation.}
+
+@item{
+  @racket[exponent] --- specifies how an exponent should be
+  formatted in exponential notation.
+
+  The default behavior depends on the base, but for decimal
+  it defaults to @litchar{e} before the exponent, if that's
+  not taken as a digit.}
+
+@item{
+  @racket[exponent-sign] --- similar to @racket[sign], but
+  for formatting the exponent's sign.
+
+  The default behaviour adds @litchar{+} before the
+  exponent's digits if it's positive or zero, or @litchar{-}
+  before the digits if its negative.}
+
+@item{
+  @racket[exponent-base] --- specifies what base the exponent
+  should be formatted in.
+
+  The default behavior uses the same @racket[base] that the
+  main number is formatted in.
+
+  However, if you want to match the format produced by
+  @racket[~r], note that that uses decimal for the exponent
+  even when you specify a different base for the main number.}
 ]}
 
 @defproc[(string->number [s string?])
