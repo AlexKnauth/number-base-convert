@@ -283,6 +283,7 @@
       (check-equal? (number->string n kwargs ...) s)
       (check-= (string->number s kwargs ...) n 0)))
   (check-number-string 12345 "12345")
+  (check-number-string 12345 "1.2345e+4" #:notation 'exponential)
   (check-number-string 123.456 "123.456")
   (check-number-string 123.456 "123,456" #:point ",")
   (check-number-string 17 "17")

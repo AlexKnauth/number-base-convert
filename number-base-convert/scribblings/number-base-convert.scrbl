@@ -114,7 +114,13 @@ configuration specified in the keyword arguments.
   radix point is formatted.
 
   The default uses @litchar{.}, if that's not taken as a
-  digit.}
+  digit.
+
+  @examples[
+    #:eval ev
+    (eval:check (number->string 123.456) "123.456")
+    (eval:check (number->string 123.456 #:point ",") "123,456")
+  ]}
 
 @item{
   @racket[repeat] --- specifies how repeating decimals, or
@@ -137,7 +143,14 @@ configuration specified in the keyword arguments.
   @racket[notation] --- specifies whether it should be
   formatted with positional or exponential notation.
 
-  The default uses positional notation.}
+  The default uses positional notation.
+
+  @examples[
+    #:eval ev
+    (eval:check (number->string 12345) "12345")
+    (eval:check (number->string 12345 #:notation 'exponential)
+                "1.2345e+4")
+  ]}
 
 @item{
   @racket[exponent] --- specifies how an exponent should be
