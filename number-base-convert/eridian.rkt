@@ -6,7 +6,8 @@
 
 (require "number-string.rkt")
 (module+ test
-  (require rackunit))
+  (require rackunit
+           racket/math))
 
 (define digits-eridian "ℓIVλ+∀")
 
@@ -158,5 +159,107 @@
     (check-number-eridian 11/20 "ℓ.λI_+_")
     (check-number-eridian 13/20 "ℓ.λ∀_V_")
     (check-number-eridian 17/20 "ℓ.∀ℓ_λ_")
-    (check-number-eridian 19/20 "ℓ.∀+_I_")))
+    (check-number-eridian 19/20 "ℓ.∀+_I_"))
+  (test-case "PHM"
+    (define (floor-nearest n m)
+      (define q (exact-floor (/ n m)))
+      (* q m))
+    (define (wrap n m)
+      (- n (floor-nearest n m)))
+    (define (avg a . bs)
+      (/ (apply + a bs) (add1 (length bs))))
+    (define (geomean a . bs)
+      (expt (apply * a bs) (/ (add1 (length bs)))))
+    (check-equal? (wrap 9 4.5) 0.0)
+    (check-equal? (wrap 10.5 4.5) 1.5)
+    (check-equal? (wrap -3 4.5) 1.5)
+    (check-equal? (wrap -3.5 4.5) 1.0)
+    (check-equal? (wrap -4.5 4.5) 0.0)
 
+    ;; -----------------------------------------------------
+ 
+    (define Eridian-sleep-min-eridian-display
+      (number->eridian (* 4 (expt 6 4))))
+    (define Eridian-sleep-max-eridian-display
+      (number->eridian (* 14 (expt 6 4))))
+    (define Eridian-sleep-avg-eridian-display
+      (number->eridian (avg (* 4 (expt 6 4)) (* 14 (expt 6 4)))))
+    (define Eridian-sleep-geomean-eridian-display
+      (number->eridian (exact-round (geomean (* 4 (expt 6 4)) (* 14 (expt 6 4))))))
+    (check-equal? Eridian-sleep-min-eridian-display "+ℓℓℓℓ")
+    (check-equal? Eridian-sleep-max-eridian-display "VVℓℓℓℓ")
+    (check-equal? Eridian-sleep-avg-eridian-display "Iλℓℓℓℓ")
+    (check-equal? Eridian-sleep-geomean-eridian-display "IIV∀VV")
+
+    ;; -----------------------------------------------------
+
+    (define C11-near-end-eridian-display "IℓIVλ")
+    (define C11-near-end-eridian-seconds
+      (eridian->number C11-near-end-eridian-display))
+    (check-equal? C11-near-end-eridian-seconds 1347)
+    (check-equal? (number->eridian
+                   (wrap (+ (eridian->number "+II+I")
+                            (eridian->number "VVℓλI"))
+                         (expt 6 5)))
+                  "λVIV")
+
+    ;; -----------------------------------------------------
+
+    (check-equal? (number->eridian (exact-round C11-near-end-eridian-seconds))
+                  "IℓIVλ")
+    
+    (check-equal? (number->eridian
+                   (+ (eridian->number "IℓIVλ")
+                      (eridian->number "IλVVℓ+")))
+                  "I+VλλI")
+    
+    (check-equal? (number->eridian
+                   (- (eridian->number "Iλ+∀∀λ")
+                      (eridian->number "IℓIVλ")))
+                  "IV++λℓ")
+    (check-equal? (number->eridian
+                   (+ (eridian->number "IℓIVλ")
+                      (eridian->number "Iλℓℓℓℓ")))
+                  "I+ℓIVλ")
+    (check-equal? (number->eridian
+                   (+ (eridian->number "IℓIVλ")
+                      (eridian->number "IIV∀VV")))
+                  "IVλℓ+∀")
+    (check-equal? (number->eridian
+                   (- (eridian->number "λ+∀∀λ")
+                      (eridian->number "Vλℓ+∀")))
+                  "II∀ℓ+")
+    (check-equal? (number->eridian
+                   (+ (eridian->number "λ+∀∀λ")
+                      (eridian->number "VVℓλI")))
+                  "IℓIℓV+")
+    (check-equal? (number->eridian
+                   (exact-round
+                    (avg (eridian->number "II∀ℓ+")
+                         (eridian->number "IV++λℓ"))))
+                  "∀ℓI+∀")
+    (check-equal? (number->eridian
+                   (exact-round
+                    (avg (eridian->number "VVℓλI")
+                         (eridian->number "∀ℓI+∀"))))
+                  "λ+IIℓ")
+    (check-equal? (number->eridian
+                   (+ (eridian->number "λ+∀∀λ")
+                      (eridian->number "λ+IIℓ")))
+                  "IIλIℓλ")
+    (check-equal? (number->eridian
+                   (- (eridian->number "IIℓ+ℓV")
+                      (eridian->number "λ+∀∀λ")))
+                  "λI+ℓ∀")
+
+    (check-equal? (number->eridian
+                   (+ (eridian->number "IℓIVλ")
+                      (eridian->number "VℓℓVλ∀")))
+                  "VIℓ+ℓV")
+    
+    (check-equal? (number->eridian
+                   (wrap (eridian->number "VIℓ+ℓV") (expt 6 5)))
+                  "Iℓ+ℓV")
+    
+    (void))
+  )
